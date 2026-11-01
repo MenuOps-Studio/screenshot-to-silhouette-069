@@ -3,7 +3,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { leadSchema } from "./lead-schema";
 
 export const submitLead = createServerFn({ method: "POST" })
-  .inputValidator((data: unknown) => leadSchema.parse(data))
+  .validator((data: unknown) => leadSchema.parse(data))
   .handler(async ({ data }) => {
     // Bots fill the hidden honeypot; pretend success without storing.
     if (data.website && data.website.length > 0) {
