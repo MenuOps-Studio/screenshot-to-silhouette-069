@@ -220,9 +220,9 @@ function Field({
   id: string;
   label: string;
   required?: boolean;
-  hint?: string;
+  hint?: string | undefined;
   icon: React.ReactNode;
-  error?: string;
+  error?: string | undefined;
   children: React.ReactNode;
 }) {
   return (
