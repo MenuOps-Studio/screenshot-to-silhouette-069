@@ -231,7 +231,7 @@ function Field({
       <Label htmlFor={id} className="text-sm font-medium text-foreground">
         {label}
         {required && <span className="text-primary">*</span>}
-        {hint && <span className="font-normal text-muted-foreground">({hint})</span>}
+        {hint && <span className="ml-1 font-normal text-muted-foreground">({hint})</span>}
       </Label>
       <div className="relative">
         <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground">
