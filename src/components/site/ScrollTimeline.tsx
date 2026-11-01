@@ -39,6 +39,7 @@ export function ScrollTimeline() {
     offset: ["start 75%", "end 55%"],
   });
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 28, mass: 0.4 });
+  const sparkTop = useTransform(progress, (v) => `${v * 100}%`);
 
   return (
     <div ref={ref} className="relative mx-auto max-w-4xl">
@@ -51,7 +52,7 @@ export function ScrollTimeline() {
       />
       {/* Travelling spark */}
       <motion.div
-        style={{ top: useTransform(progress, (v) => `${v * 100}%`) }}
+        style={{ top: sparkTop }}
         className="absolute left-6 z-10 -translate-x-1/2 -translate-y-1/2 md:left-1/2"
       >
         <span className="block size-4 rounded-full bg-sun shadow-lift ring-4 ring-sun-soft" />

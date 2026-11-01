@@ -152,8 +152,9 @@ function AboutPage() {
           </p>
           <Button
             asChild
+            variant="light"
             size="xl"
-            className="relative mt-8 rounded-full bg-card text-primary-deep shadow-card hover:bg-card/90"
+            className="relative mt-8"
           >
             <a href="#contact">
               Στη φόρμα επικοινωνίας

@@ -18,6 +18,7 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         hero: "rounded-full bg-gradient-primary text-primary-foreground shadow-lift hover:brightness-105 hover:-translate-y-0.5 transition-all duration-300",
         soft: "rounded-full bg-primary-soft text-primary-deep hover:bg-primary-soft/70 transition-colors",
+        light: "rounded-full bg-card text-primary-deep shadow-card hover:bg-card/90",
         outlineSoft:
           "rounded-full border border-border bg-card text-foreground shadow-soft hover:border-primary/40 hover:text-primary-deep transition-colors",
       },
