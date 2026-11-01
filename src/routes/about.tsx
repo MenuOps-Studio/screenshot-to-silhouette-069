@@ -140,19 +140,19 @@ function AboutPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7, ease }}
-          className="relative overflow-hidden rounded-[2.25rem] bg-gradient-primary px-6 py-16 text-center shadow-lift md:px-16 md:py-20"
+          className="relative overflow-hidden rounded-[2.25rem] border border-border bg-band px-6 py-16 text-center shadow-lift md:px-16 md:py-20"
         >
-          <div className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-sun/30 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-28 -left-20 size-72 rounded-full bg-primary-soft/20 blur-3xl" />
-          <h2 className="relative mx-auto max-w-3xl text-3xl font-semibold leading-tight text-primary-foreground md:text-5xl">
+          <div className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-sun/25 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-28 -left-20 size-72 rounded-full bg-primary/15 blur-3xl" />
+          <h2 className="relative mx-auto max-w-3xl text-3xl font-semibold leading-tight text-foreground md:text-5xl">
             Πριν αλλάξεις πάροχο, μάθε τι πραγματικά σε συμφέρει.
           </h2>
-          <p className="relative mx-auto mt-5 max-w-xl text-lg text-primary-foreground/85">
+          <p className="relative mx-auto mt-5 max-w-xl text-lg text-muted-foreground">
             Συμπληρώστε τη φόρμα και θα σας καλέσω για μια 100% δωρεάν ενημέρωση.
           </p>
           <Button
             asChild
-            variant="light"
+            variant="hero"
             size="xl"
             className="relative mt-8"
           >
