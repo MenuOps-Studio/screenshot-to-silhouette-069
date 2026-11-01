@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useId, useState, type FormEvent } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
@@ -28,6 +28,7 @@ export function FreeBadge({ className }: { className?: string }) {
 }
 
 export function LeadForm({ compact = false }: { compact?: boolean }) {
+  const uid = useId();
   const submit = useServerFn(submitLead);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [values, setValues] = useState({ name: "", phone: "", email: "", website: "" });
@@ -106,14 +107,14 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
           className={cn("flex flex-col", compact ? "gap-4" : "gap-5")}
         >
           <Field
-            id="lead-name"
+            id={`${uid}-name`}
             label="Όνομα"
             required
             icon={<User className="size-4" />}
             error={errors.name}
           >
             <Input
-              id="lead-name"
+              id={`${uid}-name`}
               name="name"
               autoComplete="name"
               placeholder="π.χ. Μαρία Παπαδοπούλου"
@@ -126,14 +127,14 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
           </Field>
 
           <Field
-            id="lead-phone"
+            id={`${uid}-phone`}
             label="Τηλέφωνο"
             required
             icon={<Phone className="size-4" />}
             error={errors.phone}
           >
             <Input
-              id="lead-phone"
+              id={`${uid}-phone`}
               name="phone"
               type="tel"
               inputMode="tel"
@@ -148,14 +149,14 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
           </Field>
 
           <Field
-            id="lead-email"
+            id={`${uid}-email`}
             label="Email"
             hint="προαιρετικό"
             icon={<Mail className="size-4" />}
             error={errors.email}
           >
             <Input
-              id="lead-email"
+              id={`${uid}-email`}
               name="email"
               type="email"
               autoComplete="email"
