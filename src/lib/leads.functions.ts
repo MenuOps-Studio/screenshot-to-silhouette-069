@@ -15,6 +15,7 @@ export const submitLead = createServerFn({ method: "POST" })
       name: data.name,
       phone: data.phone,
       email: data.email ? data.email : null,
+      service_type: data.serviceType,
       source_page: data.sourcePage ?? null,
     });
 

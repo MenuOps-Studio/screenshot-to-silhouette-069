@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowDown, BellRing, Compass, Eye, Handshake, UserCheck } from "lucide-react";
 
-import consultantImg from "@/assets/consultant.jpg";
+//import consultantImg from "@/assets/consultant.jpg";
 import { Button } from "@/components/ui/button";
 import { FreeBadge, LeadForm } from "@/components/site/LeadForm";
 
@@ -53,25 +53,38 @@ const SERVICES = [
 function AboutPage() {
   return (
     <>
-      <section className="bg-hero">
-        <div className="container-page grid items-center gap-12 pb-20 pt-14 md:pt-20 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
+      <section className="relative overflow-hidden pt-14 md:pt-20 pb-0">
+        
+        {/* --- 1. FULL WIDTH BACKGROUND ΣΕ ΟΛΗ ΤΗΝ ΟΘΟΝΗ --- */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/office-bg.jpg"
+            alt="Φόντο Γραφείο"
+            className="h-full w-full object-cover object-center"
+          />
+          {/* Αφαιρέσαμε το blur. Κρατάμε μόνο ένα λευκό φίλτρο (80%) για να κάνει αντίθεση με τα μαύρα γράμματα */}
+          <div className="absolute inset-0 bg-white/80"></div>
+        </div>
+
+        {/* Αλλαγή σε items-end για να "καθίσουν" τα στοιχεία στο κάτω μέρος */}
+        <div className="container-page relative z-10 grid items-end gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
+          
+          {/* --- 2. ΜΠΛΟΚ ΕΙΚΟΝΑΣ --- */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease }}
-            className="relative mx-auto w-full max-w-md"
+            className="relative mx-auto w-full max-w-lg flex justify-center items-end"
           >
-            <div className="absolute -inset-4 -z-10 rotate-3 rounded-[2.5rem] bg-primary-soft" />
-            <div className="overflow-hidden rounded-[2rem] border border-border bg-card shadow-card">
-              <img
-                src={consultantImg}
-                alt="Η σύμβουλος ενέργειας"
-                width={1024}
-                height={1280}
-                className="aspect-[4/5] w-full object-cover"
-              />
-            </div>
-            <div className="absolute -bottom-6 -right-4 flex items-center gap-3 rounded-2xl border border-border bg-card p-4 shadow-lift md:-right-10">
+            {/* Η σιλουέτα (μεγεθυμένη) */}
+            <img
+              src="/mama.png"
+              alt="Κική Καλούδη"
+              className="relative z-10 w-[110%] max-w-none h-auto object-contain drop-shadow-2xl"
+            />
+
+            {/* Το badge "Όλοι οι πάροχοι" */}
+            <div className="absolute bottom-8 -right-4 flex items-center gap-3 rounded-2xl border border-border bg-white/95 backdrop-blur p-4 shadow-lift md:-right-4 z-20">
               <span className="flex size-10 items-center justify-center rounded-xl bg-primary-soft text-primary">
                 <Handshake className="size-5" />
               </span>
@@ -82,16 +95,18 @@ function AboutPage() {
             </div>
           </motion.div>
 
+          {/* --- 3. ΜΠΛΟΚ ΚΕΙΜΕΝΟΥ --- */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease }}
+            className="pb-14 md:pb-20"
           >
-            <span className="eyebrow">Σχετικά & Υπηρεσίες</span>
-            <h1 className="mt-4 text-4xl font-semibold leading-tight md:text-5xl">
+            <span className="eyebrow bg-white/80 px-4 py-1.5 rounded-full shadow-sm text-slate-800 font-semibold border border-slate-200">Σχετικά & Υπηρεσίες</span>
+            <h1 className="mt-5 text-4xl font-bold leading-tight md:text-5xl text-slate-900 drop-shadow-sm">
               Η σωστή επιλογή απαιτεί πάντα και την σωστή ενημέρωση.
             </h1>
-            <p className="mt-7 text-lg leading-relaxed text-muted-foreground">
+            <p className="mt-7 text-lg leading-relaxed text-slate-800 font-medium">
               Η σωστή επιλογή απαιτεί πάντα και την σωστή ενημέρωση. Στόχος μου είναι η πλήρης
               καθοδήγησή σας με 100% δωρεάν ενημέρωση. Παρέχω δωρεάν παρακολούθηση της αγοράς,
               προσαρμοσμένη απόλυτα στις δικές σας ανάγκες. Είμαι δίπλα σας για να σας ενημερώνω
@@ -100,11 +115,12 @@ function AboutPage() {
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <FreeBadge />
-              <span className="text-sm text-muted-foreground">
+              <span className="text-sm text-slate-900 font-bold bg-white/50 px-3 py-1 rounded-lg">
                 Έμπειρη σύμβουλος · Συνεργασία με όλους τους παρόχους
               </span>
             </div>
           </motion.div>
+          
         </div>
       </section>
 

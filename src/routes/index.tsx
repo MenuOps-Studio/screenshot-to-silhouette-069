@@ -110,7 +110,7 @@ function Index() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted-foreground"
             >
-              {["Όλοι οι πάροχοι στην Ελλάδα", "Χωρίς δέσμευση", "Προσωπική εξυπηρέτηση"].map((t) => (
+              {["Όλοι οι πάροχοι στην Ελλάδα", "Άμεση Ανταπόκριση", "Προσωπική εξυπηρέτηση", "Επίσημος Συνεργάτης της Advise4you"].map((t) => (
                 <li key={t} className="flex items-center gap-2">
                   <ShieldCheck className="size-4 text-primary" />
                   {t}
@@ -174,8 +174,8 @@ function Index() {
         >
           <Quote className="size-8 text-sun" />
           <p className="mt-4 font-display text-3xl leading-snug text-foreground md:text-4xl">
-            Η σωστή επιλογή απαιτεί πάντα και την σωστή ενημέρωση.
-          </p>
+              Η σωστή επιλογή ξεκινάει από την σωστή ενημέρωση.
+            </p>
         </motion.blockquote>
       </section>
 

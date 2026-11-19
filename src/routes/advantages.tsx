@@ -17,7 +17,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-import businessImg from "@/assets/business.jpg";
+import businessImg from "@/assets/foto2.png";
 import heroImg from "@/assets/hero-home.jpg";
 import { Button } from "@/components/ui/button";
 import { useLeadDialog } from "@/components/site/LeadDialog";
@@ -25,10 +25,12 @@ import { FreeBadge } from "@/components/site/LeadForm";
 import { LeadSection } from "@/components/site/LeadSection";
 import { cn } from "@/lib/utils";
 
+const ease = [0.22, 1, 0.36, 1] as const;
+
 export const Route = createFileRoute("/advantages")({
   head: () => ({
     meta: [
-      { title: "Πλεονεκτήματα για Σπίτι & Επιχείρηση · Σωστή Επιλογή" },
+      { title: "Πλεονεκτήματα για Σπίτι & Επιχείρηση · EnergyXpert" },
       {
         name: "description",
         content:
@@ -87,7 +89,7 @@ const CONTENT: Record<
       {
         icon: HandCoins,
         title: "Μηδενικό κόστος για εσάς",
-        text: "Η ενημέρωση και η παρακολούθηση είναι 100% δωρεάν, χωρίς καμία δέσμευση.",
+        text: "Η ενημέρωση και η παρακολούθηση είναι 100% δωρεάν.",
       },
     ],
   },
@@ -107,7 +109,7 @@ const CONTENT: Record<
       {
         icon: Layers,
         title: "Σταθερά ή κυμαινόμενα",
-        text: "Σας βοηθάμε να επιλέξετε ανάμεσα σε σταθερή ή κυμαινόμενη χρέωση ανάλογα με το ρίσκο που θέλετε.",
+        text: "Σας βοηθάμε να επιλέξετε ανάμεσα σε σταθερή ή κυμαινόμενη χρέωση.",
       },
       {
         icon: LineChart,
@@ -122,12 +124,12 @@ const CONTENT: Record<
       {
         icon: Handshake,
         title: "Συνεργασία με όλους τους παρόχους",
-        text: "Αντικειμενική σύγκριση χωρίς δέσμευση σε έναν μόνο πάροχο.",
+        text: "Αντικειμενική σύγκριση των διαθέσιμων επιλογών.",
       },
       {
         icon: HandCoins,
         title: "Χωρίς κόστος συμβουλευτικής",
-        text: "Η ενημέρωση είναι 100% δωρεάν και για τις επιχειρήσεις.",
+        text: "Όλη η διαδικασία είναι 100% δωρεάν.",
       },
     ],
   },
@@ -144,7 +146,28 @@ function AdvantagesPage() {
         <div className="container-page pb-10 pt-14 text-center md:pt-20">
           <FreeBadge />
           <h1 className="mx-auto mt-6 max-w-3xl text-4xl font-semibold leading-tight md:text-6xl">
-            Κάνε την έξυπνη επιλογή χωρίς να σου κοστίσει.
+            Κάνε την έξυπνη επιλογή{" "}
+            <span className="relative inline-block text-primary">
+              χωρίς να σου κοστίσει
+              <svg
+                viewBox="0 0 300 12"
+                className="absolute -bottom-2 left-0 h-3 w-full text-sun"
+                preserveAspectRatio="none"
+                aria-hidden
+              >
+                <motion.path
+                  d="M2 9 C 80 2, 200 2, 298 7"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 1, delay: 0.4, ease }}
+                />
+              </svg>
+            </span>
+            .
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-lg text-muted-foreground">
             Επιλέξτε τι σας ενδιαφέρει και δείτε πώς μπορούμε να βοηθήσουμε.
@@ -161,7 +184,7 @@ function AdvantagesPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.4, ease }}
           >
             <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.1fr]">
               <div>
@@ -190,7 +213,7 @@ function AdvantagesPage() {
                   key={item.title}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.45, delay: 0.08 + i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.45, delay: 0.08 + i * 0.06, ease }}
                   className="group rounded-3xl border border-border bg-card p-7 shadow-soft transition-all hover:-translate-y-1 hover:shadow-card"
                 >
                   <span

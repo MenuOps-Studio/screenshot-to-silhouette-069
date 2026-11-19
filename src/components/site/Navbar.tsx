@@ -21,7 +21,10 @@ export function Logo() {
         <Zap className="size-4.5" strokeWidth={2.4} />
       </span>
       <span className="flex flex-col leading-none">
-        <span className="font-display text-lg font-semibold text-foreground">Σωστή Επιλογή</span>
+        <span className="font-display text-lg font-bold tracking-tight">
+          <span className="text-primary">Energy</span>
+          <span className="text-sun">Xpert</span>
+        </span>
         <span className="mt-0.5 text-[11px] tracking-wide text-muted-foreground">
           Σύμβουλος Ενέργειας
         </span>

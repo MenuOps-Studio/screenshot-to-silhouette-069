@@ -1,17 +1,15 @@
 import { useId, useState, type FormEvent } from "react";
-import { useServerFn } from "@tanstack/react-start";
 import { useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle2, Loader2, Mail, Phone, ShieldCheck, User } from "lucide-react";
+import { CheckCircle2, Loader2, Mail, Phone, ShieldCheck, User, Zap, Flame } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { leadSchema } from "@/lib/lead-schema";
-import { submitLead } from "@/lib/leads.functions";
 import { cn } from "@/lib/utils";
 
-type FieldErrors = Partial<Record<"name" | "phone" | "email", string>>;
+type FieldErrors = Partial<Record<"name" | "phone" | "email" | "serviceType", string>>;
 
 export function FreeBadge({ className }: { className?: string }) {
   return (
@@ -29,9 +27,8 @@ export function FreeBadge({ className }: { className?: string }) {
 
 export function LeadForm({ compact = false }: { compact?: boolean }) {
   const uid = useId();
-  const submit = useServerFn(submitLead);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const [values, setValues] = useState({ name: "", phone: "", email: "", website: "" });
+  const [values, setValues] = useState({ name: "", phone: "", email: "", website: "", serviceType: "" });
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [serverError, setServerError] = useState<string | null>(null);
@@ -44,6 +41,7 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     setServerError(null);
+
     const parsed = leadSchema.safeParse({ ...values, sourcePage: pathname });
     if (!parsed.success) {
       const fe: FieldErrors = {};
@@ -54,9 +52,52 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
       setErrors(fe);
       return;
     }
+
+    if (parsed.data.website && parsed.data.website.length > 0) {
+      setStatus("done");
+      return;
+    }
+
+    const serviceLabels: Record<string, string> = {
+      "Ρεύμα": "⚡ Ρεύμα",
+      "Φυσικό Αέριο": "🔥 Φυσικό Αέριο",
+      "Και τα δύο": "⚡🔥 Ρεύμα & Φυσικό Αέριο",
+    };
+
+    const formattedService =
+      serviceLabels[parsed.data.serviceType] || parsed.data.serviceType;
+
     setStatus("sending");
     try {
-      await submit({ data: parsed.data });
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "616a87a4-acd3-4302-926b-1f8fba7e3afb",
+          from_name: "EnergyXpert · Νέα Αίτηση",
+          subject: `${formattedService} | ${parsed.data.name}`,
+          ...(parsed.data.email ? { replyto: parsed.data.email } : {}),
+          "👤 Ονοματεπώνυμο": parsed.data.name,
+          "📞 Τηλέφωνο Επικοινωνίας": parsed.data.phone,
+          "💡 Ενδιαφέρεται για": formattedService,
+          "✉️ Email Πελάτη": parsed.data.email || "Δεν συμπληρώθηκε",
+          "📍 Σελίδα Αίτησης":
+            parsed.data.sourcePage === "/advantages"
+              ? "Πλεονεκτήματα"
+              : parsed.data.sourcePage === "/about"
+                ? "Σχετικά"
+                : "Αρχική Σελίδα",
+        }),
+      });
+
+      const result = await response.json();
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Δεν ήταν δυνατή η αποστολή.");
+      }
+
       setStatus("done");
     } catch (err) {
       setStatus("error");
@@ -89,7 +130,7 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
             variant="outlineSoft"
             size="pill"
             onClick={() => {
-              setValues({ name: "", phone: "", email: "", website: "" });
+              setValues({ name: "", phone: "", email: "", website: "", serviceType: "" });
               setStatus("idle");
             }}
           >
@@ -147,6 +188,64 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
               className="h-12 rounded-xl bg-card pl-10 text-base"
             />
           </Field>
+
+          {/* --- ΕΠΙΛΟΓΗ ΥΠΗΡΕΣΙΑΣ --- */}
+          <div className="flex flex-col gap-1.5 pt-1 pb-1">
+            <Label className="text-sm font-medium text-foreground">
+              Ενδιαφέρομαι για <span className="text-primary">*</span>
+            </Label>
+            <div className="grid grid-cols-3 gap-3">
+              {/* Επιλογή: Ρεύμα */}
+              <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-border bg-card p-3 text-center transition-all hover:bg-muted/50 has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:ring-1 has-[:checked]:ring-primary">
+                <input
+                  type="radio"
+                  name="serviceType"
+                  value="Ρεύμα"
+                  checked={values.serviceType === "Ρεύμα"}
+                  onChange={update("serviceType")}
+                  className="sr-only"
+                  required
+                />
+                <Zap className="size-6 text-amber-500" />
+                <span className="text-xs font-semibold">Ρεύμα</span>
+              </label>
+
+              {/* Επιλογή: Φυσικό Αέριο */}
+              <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-border bg-card p-3 text-center transition-all hover:bg-muted/50 has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:ring-1 has-[:checked]:ring-primary">
+                <input
+                  type="radio"
+                  name="serviceType"
+                  value="Φυσικό Αέριο"
+                  checked={values.serviceType === "Φυσικό Αέριο"}
+                  onChange={update("serviceType")}
+                  className="sr-only"
+                  required
+                />
+                <Flame className="size-6 text-orange-500" />
+                <span className="text-xs font-semibold">Φυσικό Αέριο</span>
+              </label>
+
+              {/* Επιλογή: Και τα δύο */}
+              <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-border bg-card p-3 text-center transition-all hover:bg-muted/50 has-[:checked]:border-primary has-[:checked]:bg-primary/5 has-[:checked]:ring-1 has-[:checked]:ring-primary">
+                <input
+                  type="radio"
+                  name="serviceType"
+                  value="Και τα δύο"
+                  checked={values.serviceType === "Και τα δύο"}
+                  onChange={update("serviceType")}
+                  className="sr-only"
+                  required
+                />
+                <div className="flex gap-1">
+                  <Zap className="size-5 text-amber-500" />
+                  <Flame className="size-5 text-orange-500" />
+                </div>
+                <span className="text-xs font-semibold">Και τα 2</span>
+              </label>
+            </div>
+            {errors.serviceType && <p className="text-xs font-medium text-destructive">{errors.serviceType}</p>}
+          </div>
+          {/* --- ΤΕΛΟΣ ΕΠΙΛΟΓΗΣ ΥΠΗΡΕΣΙΑΣ --- */}
 
           <Field
             id={`${uid}-email`}

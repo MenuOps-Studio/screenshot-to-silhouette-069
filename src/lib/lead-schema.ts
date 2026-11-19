@@ -23,6 +23,10 @@ export const leadSchema = z.object({
       },
       { message: "Το τηλέφωνο πρέπει να έχει 10–15 ψηφία" },
     ),
+  serviceType: z
+    .string()
+    .trim()
+    .min(1, { message: "Παρακαλώ επιλέξτε τι σας ενδιαφέρει (Ρεύμα, Φυσικό Αέριο ή Και τα 2)" }),
   email: z
     .string()
     .trim()

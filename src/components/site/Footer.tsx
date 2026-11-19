@@ -12,7 +12,7 @@ export function Footer() {
         <div className="max-w-sm">
           <Logo />
           <p className="mt-5 font-display text-lg leading-snug text-foreground">
-            Η σωστή επιλογή απαιτεί πάντα και την σωστή ενημέρωση.
+            Η σωστή επιλογή ξεκινάει από την σωστή ενημέρωση.
           </p>
           <p className="mt-3 inline-flex items-center gap-2 text-sm text-muted-foreground">
             <ShieldCheck className="size-4 text-primary" />
@@ -48,7 +48,7 @@ export function Footer() {
       </div>
       <div className="border-t border-border">
         <p className="container-page py-5 text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Σωστή Επιλογή · Σύμβουλος Ενέργειας. 100% Δωρεάν ενημέρωση.
+          © {new Date().getFullYear()} EnergyXpert · Σύμβουλος Ενέργειας. 100% Δωρεάν ενημέρωση.
         </p>
       </div>
     </footer>
